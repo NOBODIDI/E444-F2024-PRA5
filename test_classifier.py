@@ -17,16 +17,16 @@ def send_request(data):
     headers = {'Content-Type': 'application/json'}
     response = requests.post(base_url, json=data, headers=headers)
     return response.json()
-
+   
 def test_functional():
     print("\nRunning Functional Tests...")
     for i, case in enumerate(test_cases):
-        response = send_request(case)
+        response = send_request(case) 
         assert 'classification' in response
         print(f"Test case {i+1}: {case['text']} -> {response['classification']}")
-
+  
 def test_performance():
-    print("\nRunning Performance Tests...")
+    print("\nRunning Performance Tests...")  
     latencies = {i: [] for i in range(4)} 
 
     with open('latency_results.csv', mode='w', newline='') as file:
@@ -35,7 +35,7 @@ def test_performance():
 
         for i, case in enumerate(test_cases):
             print(f"Running 100 requests for Test case {i+1}: {case['text']}")
-            for j in range(100):
+            for j in range(100): 
                 start_time = time.time()
                 response = send_request(case)
                 end_time = time.time()
@@ -45,7 +45,7 @@ def test_performance():
                 writer.writerow([i + 1, j + 1, latency])
 
                 assert 'classification' in response
-
+ 
     generate_boxplot(latencies)
 
 def generate_boxplot(latencies):
@@ -53,7 +53,7 @@ def generate_boxplot(latencies):
     data = [latencies[i] for i in range(4)]
     plt.boxplot(data, labels=[f"Test {i+1}" for i in range(4)])
     plt.title("Latency Performance for Fake News Classifier")
-    plt.ylabel("Latency (seconds)")
+    plt.ylabel("Latency (seconds)") 
     plt.xlabel("Test Case")
     plt.show()
 
